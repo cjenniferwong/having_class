@@ -8,3 +8,4 @@ figuring out if you need to write a class or function
     I learned to use the requests library and put things into the body/headers
 - having class
     I learned to better differentiate when to write classes and when to write function
+- working with edge-cases and exceptions, and what-ifs
