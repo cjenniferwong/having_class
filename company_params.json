@@ -4,7 +4,7 @@
         "api_url" : "https://api.lever.co/v0/postings/spotify"
         ,
         "params": {
-            "limit": None
+            "limit": 50
             , "mode": "json"
         }
         , "headers":{
