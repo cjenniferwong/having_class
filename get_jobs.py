@@ -1,9 +1,8 @@
+from sys import argv
 import requests
 import pandas as pd
 import re
-
 import webbrowser
-from sys import argv
 
 
 def get_all_listings(company_name):
@@ -16,6 +15,7 @@ def get_all_listings(company_name):
     })
     data = r.json()
     jobs_df = pd.DataFrame(data)
+    print(f'grabbed {len(jobs_df)} jobs')
     return jobs_df
 
 
@@ -56,17 +56,23 @@ def open_urls(df, column):
         webbrowser.open_new_tab(url)
 
 
-def main(company_name):
+def main(company_name, format):
+    """
+    TODO: i should look into creating a pipeline to make it easier to read
+    """
     spotify_listings = get_all_listings(company_name)
-    unnested = unnest_categories(spotify_listings, 'categories')
+    filtered = filter_jobs(spotify_listings, 'text')
+    unnested = unnest_categories(filtered, 'categories')
     excluded = exclude_departments(unnested)
-    # if i dont want tracking
-    # excluded.to_csv('~/Desktop/spotify_jobs.csv', index=False)
+    if format == 'csv':
+        excluded.to_csv('~/Desktop/spotify_jobs.csv', index=False)
+    if format == 'pretty':
 
-    # if im being lazy and just want to look at a pretty page instead
-    open_urls(excluded, 'hostedUrl')
+        # if im being lazy and just want to look at a pretty page instead
+        open_urls(excluded, 'hostedUrl')
 
 
 if __name__ == '__main__':
     company_name = argv[1]
-    main(company_name)
+    format = argv[2]
+    main(company_name, format)
