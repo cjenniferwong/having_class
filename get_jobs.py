@@ -1,12 +1,17 @@
+import warnings
+
 from sys import argv
+import json
 import requests
 import pandas as pd
 import re
 import webbrowser
-import json
+
 
 from companies import Company
 from data_filtering import *
+
+# warnings.warn('Helpful message')
 
 
 def open_urls(df, column):
